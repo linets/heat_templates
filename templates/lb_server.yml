@@ -27,12 +27,16 @@ resources:
     type: OS::Nova::Server
     properties:
       flavor: {get_param: flavor}
-      image: {get_param: image}
+      block_device_mapping:
+        - device_name: vda
+          delete_on_termination: true
+          volume_id: { get_resource: volume }
       key_name: {get_param: key_name}
-      metadata: {get_param: metadata}
-      user_data: {get_param: user_data}
-      user_data_format: RAW
       networks: [{network: {get_param: network} }]
+  volume:
+    type: OS::Cinder::Volume
+    properties:
+      snapshot_id: { get_param: image }
   member:
     type: OS::Neutron::PoolMember
     properties:
