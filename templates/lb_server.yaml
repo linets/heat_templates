@@ -1,9 +1,9 @@
 heat_template_version: 2013-05-23
 description: A load-balancer server
 parameters:
-  image:
+  volume_snapshot:
     type: string
-    description: Image used for servers
+    description: volume snapshot _id
   key_name:
     type: string
     description: SSH key to connect to the servers
@@ -36,7 +36,7 @@ resources:
   volume:
     type: OS::Cinder::Volume
     properties:
-      snapshot_id: { get_param: image }
+      snapshot_id: { get_param: volume_snapshot }
   member:
     type: OS::Neutron::PoolMember
     properties:
