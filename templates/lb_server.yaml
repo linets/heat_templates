@@ -7,6 +7,9 @@ parameters:
   key_name:
     type: string
     description: SSH key to connect to the servers
+  security_groups:
+    type: comma_delimited_list
+    description: Security groups id list
   flavor:
     type: string
     description: flavor used by the servers
@@ -32,6 +35,7 @@ resources:
           delete_on_termination: true
           volume_id: { get_resource: volume }
       key_name: {get_param: key_name}
+      security_groups: {get_param: security_groups}
       networks: [{network: {get_param: network} }]
   volume:
     type: OS::Cinder::Volume
