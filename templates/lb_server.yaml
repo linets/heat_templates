@@ -29,6 +29,7 @@ resources:
   server:
     type: OS::Nova::Server
     properties:
+      metadata: {get_param: metadata}
       flavor: {get_param: flavor}
       block_device_mapping:
         - device_name: vda
